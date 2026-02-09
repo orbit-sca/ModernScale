@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <option name="separateProdTestSources" value="true" />
+    <profile name="sbt 1" modules="kemberco,kemberco.kember-backend,kemberco.kember-frontend,kemberco.kember-shared.sharedJS,kemberco.kember-shared.sharedJVM,zio-rite-of-passage,zio-rite-of-passage.foundations" />
+    <profile name="sbt 2" modules="kemberco.kember-backend.main,kemberco.kember-backend.test,kemberco.kember-shared.sharedJVM.main,kemberco.kember-shared.sharedJVM.test,kemberco.main,kemberco.test,zio-rite-of-passage.foundations.main,zio-rite-of-passage.foundations.test,zio-rite-of-passage.main,zio-rite-of-passage.test">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+    </profile>
+    <profile name="sbt 3" modules="kemberco.kember-frontend.main,kemberco.kember-frontend.test,kemberco.kember-shared.sharedJS.main,kemberco.kember-shared.sharedJS.test">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <parameters>
+        <parameter value="-scalajs" />
+      </parameters>
+    </profile>
+  </component>
+</project>

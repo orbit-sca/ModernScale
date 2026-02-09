@@ -1,0 +1,1195 @@
+/* ============================================================================
+   BRICE.SOLUTIONS - DATA VADER THEME
+   Dark portfolio with red accents, scanlines, and data grid aesthetics
+   ============================================================================ */
+
+/* CSS Variables */
+:root {
+  /* Core Colors - Data Vader */
+  --color-void: #000000;
+  --color-dark: #0a0a0b;
+  --color-darker: #050506;
+  --color-card: #111113;
+  --color-card-hover: #1a1a1d;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(217, 38, 38, 0.3);
+
+  /* Accent - Saber Red */
+  --color-primary: #d92626;
+  --color-primary-glow: rgba(217, 38, 38, 0.4);
+  --color-primary-dim: rgba(217, 38, 38, 0.15);
+
+  /* Text */
+  --color-text: #ffffff;
+  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-dim: rgba(255, 255, 255, 0.3);
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Space Grotesk', -apple-system, sans-serif;
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-xxxl: 80px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 30px var(--color-primary-glow);
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-padding: 80px;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-text);
+  background-color: var(--color-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ============================================================================
+   SCANLINE OVERLAY - Always present subtle effect
+   ============================================================================ */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ============================================================================
+   TYPOGRAPHY
+   ============================================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(36px, 8vw, 64px); }
+h2 { font-size: clamp(28px, 5vw, 42px); }
+h3 { font-size: clamp(20px, 3vw, 24px); }
+
+p {
+  margin-bottom: var(--space-md);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: #ff4444;
+  text-shadow: 0 0 10px var(--color-primary-glow);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+}
+
+/* ============================================================================
+   CONTAINER
+   ============================================================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 24px;
+  }
+}
+
+/* ============================================================================
+   DATA GRID BACKGROUND
+   ============================================================================ */
+.data-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(217, 38, 38, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 38, 38, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ============================================================================
+   GLASSMORPHIC CARDS
+   ============================================================================ */
+.glass-card {
+  background: rgba(17, 17, 19, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(217, 38, 38, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-text);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+  background: #ff3333;
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 0 20px var(--color-primary-dim);
+}
+
+/* ============================================================================
+   STATUS INDICATORS - Pulsing lights
+   ============================================================================ */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-primary-glow);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--color-primary-glow); }
+  50% { opacity: 0.5; box-shadow: 0 0 20px var(--color-primary-glow); }
+}
+
+/* ============================================================================
+   TERMINAL TEXT EFFECT
+   ============================================================================ */
+.terminal-text {
+  font-family: var(--font-mono);
+  color: var(--color-primary);
+  text-shadow: 0 0 10px var(--color-primary-glow);
+}
+
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: var(--color-primary);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ============================================================================
+   NAVIGATION
+   ============================================================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 11, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-md) 0;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.desktop-nav a {
+  color: var(--color-text-muted);
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width 0.3s ease;
+}
+
+.desktop-nav a:hover {
+  color: var(--color-text);
+}
+
+.desktop-nav a:hover::after {
+  width: 100%;
+}
+
+/* Mobile Nav */
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .mobile-menu-button {
+    display: flex !important;
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .desktop-nav {
+    display: none !important;
+  }
+}
+
+/* ============================================================================
+   HERO SECTION
+   ============================================================================ */
+.hero-section-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: var(--color-dark);
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xxxl);
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* ============================================================================
+   PROJECT CARDS GRID
+   ============================================================================ */
+.projects-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.project-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-glow);
+}
+
+.project-card-image {
+  height: 200px;
+  background: linear-gradient(135deg, var(--color-card-hover), var(--color-darker));
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, var(--color-card) 100%);
+}
+
+.project-card-content {
+  padding: var(--space-lg);
+}
+
+.project-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text);
+}
+
+.project-card-description {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.project-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 8px;
+  background: var(--color-primary-dim);
+  color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================================
+   FOOTER
+   ============================================================================ */
+footer {
+  background: var(--color-darker);
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-xxxl) 0 var(--space-xl);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-xxl);
+  margin-bottom: var(--space-xxl);
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE UTILITIES
+   ============================================================================ */
+.responsive-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+  .responsive-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  :root {
+    --container-padding: 24px;
+  }
+
+  h1 { font-size: 32px; }
+  h2 { font-size: 26px; }
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes dataStream {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Hover state for process cards */
+.process-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.process-card:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--color-border-hover) !important;
+  transform: translateY(-4px);
+}
+
+/* Hide connecting line on mobile */
+@media (max-width: 1024px) {
+  .process-connecting-line {
+    display: none !important;
+  }
+}
+
+/* Hero image column hide on mobile */
+@media (max-width: 768px) {
+  .hero-image-column {
+    display: none;
+  }
+}
+
+/* Form Inputs */
+input, textarea {
+  font-family: var(--font-body);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  color: var(--color-text);
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-dim);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-text-dim);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-text);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-card-hover);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dim);
+}
+
+/* ============================================================================
+   CATEGORY CARDS
+   ============================================================================ */
+.category-card:hover {
+  border-color: var(--color-border-hover) !important;
+  transform: scale(1.02) translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.category-card:hover svg {
+  transform: scale(1.1);
+}
+
+/* ============================================================================
+   COURSE CARDS
+   ============================================================================ */
+.course-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.course-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.course-card > div:last-child > a.enroll-btn {
+  margin-top: auto;
+}
+
+.course-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.course-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-glow);
+}
+
+.course-card:hover::before {
+  opacity: 1;
+}
+
+.course-card:hover .course-card-image {
+  background: linear-gradient(135deg, rgba(217, 38, 38, 0.3) 0%, rgba(59, 130, 246, 0.15) 100%);
+}
+
+.course-card-image {
+  transition: all 0.3s ease;
+}
+
+/* Enroll button hover effect */
+.course-card .enroll-btn {
+  transition: all 0.2s ease;
+}
+
+.course-card:hover .enroll-btn {
+  background: #ff3333;
+  box-shadow: 0 0 20px var(--color-primary-glow);
+}
+
+/* Navigation Dropdown Styles */
+.nav-dropdown-item:hover {
+  background: rgba(217, 38, 38, 0.1);
+  color: var(--color-primary);
+}
+
+/* ============================================================================
+   PROFILE PICTURE COMPONENT
+   ============================================================================ */
+.profile-picture-wrapper {
+  transition: transform 0.3s ease;
+}
+
+.profile-picture-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.profile-picture-wrapper:hover img {
+  filter: grayscale(0%) contrast(1.1) !important;
+}
+
+/* Ensure spin animation works for the glow ring */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Profile image fallback styling */
+.profile-picture-wrapper img {
+  background: linear-gradient(135deg, var(--color-card-hover), var(--color-darker));
+}
+
+/* ============================================================================
+   COMPREHENSIVE MOBILE OPTIMIZATIONS
+   ============================================================================ */
+
+/* Mobile-first adjustments */
+@media (max-width: 768px) {
+  /* Reduce overall spacing on mobile */
+  :root {
+    --space-xxxl: 48px;
+    --space-xxl: 32px;
+    --space-xl: 24px;
+  }
+
+  /* ===== HERO SECTION MOBILE ===== */
+  .hero-section-wrapper {
+    padding-top: 100px !important;
+    padding-bottom: 60px !important;
+    min-height: auto !important;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+    text-align: center;
+  }
+
+  /* Hide profile picture on mobile portrait - doesn't fit the design */
+  .hero-image-column {
+    display: none !important;
+  }
+
+  /* Adjust hero content for mobile */
+  .hero-buttons {
+    justify-content: center !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  .hero-buttons button,
+  .hero-buttons a {
+    width: 100% !important;
+    max-width: 280px !important;
+    justify-content: center !important;
+  }
+
+  /* Center tech badges on mobile */
+  .hero-section-wrapper [style*="flex-wrap: wrap"] {
+    justify-content: center !important;
+  }
+
+  /* ===== TYPOGRAPHY MOBILE ===== */
+  h1 {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  h2 {
+    font-size: 24px !important;
+  }
+
+  h3 {
+    font-size: 18px !important;
+  }
+
+  /* ===== PAGE SECTIONS MOBILE ===== */
+  .development-page,
+  .analytics-page,
+  .learn-page,
+  .contact-page {
+    padding-top: 100px !important;
+  }
+
+  /* Section padding adjustments */
+  section,
+  [style*="padding-top: 128px"] {
+    padding-top: 100px !important;
+    padding-bottom: 60px !important;
+  }
+
+  /* ===== CARDS & GRIDS MOBILE ===== */
+  /* Course cards - single column */
+  [style*="grid-template-columns: repeat(auto-fit, minmax(400px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Project cards - single column */
+  .projects-grid,
+  [style*="grid-template-columns: repeat(auto-fit, minmax(320px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Skills grid - single column on small screens */
+  [style*="grid-template-columns: repeat(auto-fit, minmax(300px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Course card image height reduction */
+  .course-card-image,
+  [style*="height: 200px"] {
+    height: 160px !important;
+  }
+
+  /* Card hover effects - reduce on mobile for better UX */
+  .course-card:hover,
+  .project-card:hover,
+  .glass-card:hover {
+    transform: translateY(-4px) !important;
+  }
+
+  /* ===== BUTTONS MOBILE ===== */
+  .btn-primary,
+  .btn-secondary {
+    padding: 14px 24px !important;
+    font-size: 13px !important;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ===== NAVIGATION MOBILE ===== */
+  nav .container {
+    padding: 0 16px !important;
+  }
+
+  /* ===== CONTACT FORM MOBILE ===== */
+  input, textarea {
+    font-size: 16px !important; /* Prevents iOS zoom */
+    padding: 14px !important;
+  }
+
+  /* ===== FOOTER MOBILE ===== */
+  footer {
+    padding: 48px 0 32px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center;
+  }
+
+  /* ===== CATEGORY CARDS MOBILE ===== */
+  .category-card {
+    padding: 24px !important;
+  }
+
+  .category-card:hover {
+    transform: scale(1.01) translateY(-2px) !important;
+  }
+
+  /* ===== GLASS CARD MOBILE ===== */
+  .glass-card {
+    padding: 20px !important;
+  }
+
+  /* ===== SKILLS SECTION MOBILE ===== */
+  [style*="cat ./skills.json"] {
+    font-size: 12px !important;
+  }
+}
+
+/* Extra small devices (phones in portrait) */
+@media (max-width: 480px) {
+  :root {
+    --space-xxxl: 40px;
+    --space-xxl: 28px;
+    --space-xl: 20px;
+    --space-lg: 16px;
+  }
+
+  h1 {
+    font-size: 24px !important;
+  }
+
+  h2 {
+    font-size: 20px !important;
+  }
+
+  /* Reduce card padding further */
+  .glass-card,
+  .course-card [style*="padding"],
+  .project-card [style*="padding"] {
+    padding: 16px !important;
+  }
+
+  /* Stack badges vertically if needed */
+  [style*="flex-wrap: wrap"][style*="gap"] {
+    gap: 8px !important;
+  }
+
+  /* Smaller tech badges */
+  [style*="font-size: 11px"][style*="padding: 6px 12px"] {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* Tablet adjustments - show profile picture */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-grid {
+    gap: 40px !important;
+  }
+
+  /* Show profile on tablet */
+  .hero-image-column {
+    display: flex !important;
+  }
+
+  .profile-picture-wrapper {
+    width: 280px !important;
+    height: 280px !important;
+  }
+
+  /* Two columns for cards on tablet */
+  [style*="grid-template-columns: repeat(auto-fit, minmax(400px"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Landscape mobile - only show profile on true mobile landscape (short height) */
+@media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+  .hero-section-wrapper {
+    min-height: auto !important;
+    padding: 100px 24px 40px !important;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr 1fr !important;
+    text-align: left;
+  }
+
+  /* Show profile in true landscape mobile */
+  .hero-image-column {
+    display: flex !important;
+    order: 0 !important;
+  }
+
+  .profile-picture-wrapper {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  .hero-buttons {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+  }
+
+  .hero-buttons button,
+  .hero-buttons a {
+    width: auto !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover transforms on touch devices */
+  .course-card:hover,
+  .project-card:hover,
+  .category-card:hover,
+  .glass-card:hover {
+    transform: none !important;
+  }
+
+  /* Increase tap targets */
+  .btn-primary,
+  .btn-secondary,
+  a[style*="padding"] {
+    min-height: 48px;
+  }
+
+  /* Make sure links are easily tappable */
+  nav a,
+  .desktop-nav a {
+    padding: 12px 8px;
+  }
+}
+
+/* ============================================================================
+   PAGE-SPECIFIC MOBILE OPTIMIZATIONS
+   ============================================================================ */
+
+/* Learn Page Mobile */
+.courses-grid {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .learn-page {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .learn-page [style*="padding-top: 128px"] {
+    padding-top: 100px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .learn-page [style*="padding-bottom: 96px"] {
+    padding-bottom: 60px !important;
+  }
+
+  /* Courses grid single column on mobile */
+  .courses-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Course card mobile adjustments */
+  .course-card [style*="height: 200px"] {
+    height: 150px !important;
+  }
+
+  .course-card [style*="padding: 32px"],
+  .course-card [style*="padding: 24px"] {
+    padding: 20px !important;
+  }
+
+  /* Price badge smaller on mobile */
+  .course-card [style*="padding: 8px 16px"][style*="background: #d92626"],
+  .course-card [style*="background: #d92626"][style*="position: absolute"] {
+    padding: 6px 12px !important;
+  }
+
+  .course-card [style*="font-size: 18px"] {
+    font-size: 16px !important;
+  }
+
+  /* Course description truncation */
+  .course-card p[style*="line-height: 1.7"] {
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Play icon smaller on mobile */
+  .course-card svg[width="80"] {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+/* Contact Page Mobile */
+@media (max-width: 768px) {
+  /* Toast notification mobile */
+  [style*="position: fixed"][style*="top: 24px"][style*="right: 24px"] {
+    left: 16px !important;
+    right: 16px !important;
+    max-width: none !important;
+    top: 16px !important;
+  }
+
+  /* Contact hero section */
+  [style*="padding: 160px 0"] {
+    padding: 120px 0 48px !important;
+  }
+
+  /* Contact form padding */
+  form[style*="padding: 48px"],
+  form[style*="padding: 32px"] {
+    padding: 24px !important;
+  }
+
+  /* Email link word break */
+  a[href^="mailto:"] {
+    word-break: break-all;
+  }
+}
+
+/* Development/Analytics Pages Mobile */
+@media (max-width: 768px) {
+  .development-page,
+  .analytics-page {
+    padding: 0 !important;
+  }
+
+  .development-page [style*="padding-top: 128px"],
+  .analytics-page [style*="padding-top: 128px"] {
+    padding-top: 100px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .development-page [style*="padding-bottom: 96px"],
+  .analytics-page [style*="padding-bottom: 96px"] {
+    padding-bottom: 60px !important;
+  }
+
+  /* Project card iframe responsive */
+  .project-card [style*="aspect-ratio: 16/9"] {
+    aspect-ratio: 4/3 !important;
+  }
+
+  /* Project card action buttons stack */
+  .project-card [style*="display: flex"][style*="flex-wrap: wrap"][style*="gap"] {
+    flex-direction: column !important;
+  }
+
+  .project-card [style*="display: flex"][style*="flex-wrap: wrap"] a {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* Skills Section Mobile */
+@media (max-width: 768px) {
+  [style*="cat ./skills.json"] {
+    font-size: 12px !important;
+  }
+
+  /* Skills card padding */
+  [style*="padding: 32px"][style*="border-radius"][style*="background: #111113"] {
+    padding: 20px !important;
+  }
+
+  /* Skill bar text */
+  [style*="font-size: 14px"][style*="color: #ffffff"] {
+    font-size: 13px !important;
+  }
+}
+
+/* Category Cards Section Mobile */
+@media (max-width: 768px) {
+  .category-card {
+    padding: 20px !important;
+  }
+
+  /* Category card icon container */
+  .category-card [style*="width: 48px"][style*="height: 48px"] {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .category-card svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+/* Footer Mobile */
+@media (max-width: 768px) {
+  footer .container {
+    padding: 0 16px !important;
+  }
+
+  /* Footer social links */
+  footer [style*="display: flex"][style*="gap"] {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Safe area padding for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+
+  nav {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}
