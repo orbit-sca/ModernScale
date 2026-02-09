@@ -44,6 +44,13 @@ object HttpServer:
   private def getEnv(key: String, default: String, envFile: Map[String, String]): String =
     envFile.getOrElse(key, sys.env.getOrElse(key, default))
 
+  /** Convert Railway DATABASE_URL format to JDBC format */
+  private def convertDatabaseUrl(url: String): String =
+    if url.startsWith("postgresql://") then
+      url.replace("postgresql://", "jdbc:postgresql://")
+    else
+      url
+
   /** Read file content */
   private def readFile(path: String): ZIO[Any, Throwable, String] =
     ZIO.attemptBlocking {
@@ -162,7 +169,8 @@ object HttpServer:
       port <- ZIO.succeed(getEnv("PORT", "8080", envFile).toInt)
 
       // Get database configuration
-      dbUrl = getEnv("DATABASE_URL", "jdbc:postgresql://localhost:5432/modernscale", envFile)
+      rawDbUrl = getEnv("DATABASE_URL", "jdbc:postgresql://localhost:5432/modernscale", envFile)
+      dbUrl = convertDatabaseUrl(rawDbUrl)
       dbUser = getEnv("DATABASE_USER", "postgres", envFile)
       dbPassword = getEnv("DATABASE_PASSWORD", "postgres", envFile)
       _ <- ZIO.logInfo(s"Database URL: $dbUrl")
