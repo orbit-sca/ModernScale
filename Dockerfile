@@ -32,7 +32,7 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
 # Copy the backend JAR
-COPY --from=builder /app/modules/backend/target/scala-3.7.4/kember-backend.jar ./app.jar
+COPY --from=builder /app/modules/backend/target/scala-3.*/brice-backend.jar ./app.jar
 
 # Copy frontend static files
 COPY --from=builder /app/modules/frontend/dist/ ./static/dist/
